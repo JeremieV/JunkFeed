@@ -1,0 +1,11 @@
+https://feeds.bloomberg.com/business/news.rss
+https://feeds.bloomberg.com/bview/news.rss
+https://feeds.bloomberg.com/crypto/news.rss
+https://feeds.bloomberg.com/economics/news.rss
+https://feeds.bloomberg.com/gadfly/news.rss
+https://feeds.bloomberg.com/green/news.rss
+https://feeds.bloomberg.com/industries/news.rss
+https://feeds.bloomberg.com/markets/news.rss
+https://feeds.bloomberg.com/politics/news.rss
+https://feeds.bloomberg.com/technology/news.rss
+https://feeds.bloomberg.com/wealth/news.rss
