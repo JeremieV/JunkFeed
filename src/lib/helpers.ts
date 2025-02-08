@@ -120,6 +120,8 @@ export async function urlToRSS(url: string): Promise<string> {
   return (await youtubeToRSS(url)) || redditToRSS(url) || substackToRSS(url) || mediumToRSS(url) || url;
 }
 
+export function _import() {} 
+
 export function _export(urls: string[]) {
   const opml = `<?xml version="1.0" encoding="UTF-8"?>
 <opml version="2.0">

@@ -3,7 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Suspense } from "react";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
+import AppScaffold from "@/components/app-scaffold";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,7 +39,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Suspense>
-            {children}
+            <AppScaffold>
+              {children}
+            </AppScaffold>
           </Suspense>
         </ThemeProvider>
         <Analytics />

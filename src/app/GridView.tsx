@@ -1,9 +1,9 @@
 "use client"
 
 import { displayTimeAgo, displayUrl } from "@/lib/helpers"
-import Thumbnail from "./Thumbnail"
-// import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from "@/components/ui/skeleton"
 import { FeedEntry } from "@extractus/feed-extractor"
+import { useQuery } from "@tanstack/react-query"
 
 export default function GridView({ currentStories }: { currentStories: FeedEntry[] }) {
   return (
@@ -16,6 +16,16 @@ export default function GridView({ currentStories }: { currentStories: FeedEntry
 }
 
 function GridComponent({ story }: { story: FeedEntry }) {
+  const metadataQ = useQuery({
+    queryKey: ['page-meta', story.link],
+    queryFn: async () => {
+      // @ts-expect-error i enrich the entries with thumbnails manually in fetchFeed
+      if (story.thumbnail) return story.thumbnail
+      const r = await fetch(`/api/metadata?url=${encodeURIComponent(story.link ?? '')}`)
+      const json = await r.json()
+      return json.image || '' as string
+    }
+  })
 
   return (
     <a
@@ -26,23 +36,17 @@ function GridComponent({ story }: { story: FeedEntry }) {
       rel="noopener noreferrer"
       className="block rounded-md"
     >
-      <div className='aspect-video w-full overflow-hidden' title={story.description}>
-        {/* @ts-expect-error i enrich the entries with thumbnails manually in fetchFeed */}
-        {story.thumbnail ?
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            // @ts-expect-error i enrich the entries with thumbnails manually in fetchFeed
-            src={story.thumbnail}
-            alt={story.title}
-            className="w-full h-full object-cover rounded-md"
-          />
-          :
-          <Thumbnail title={story.title ?? ''} />
+      <div className='aspect-video w-full overflow-hidden rounded-xl' title={story.description}>
+        {metadataQ.data
+          ?
+          <img src={metadataQ.data} alt={story.title} className="w-full h-full object-cover bg-muted/50" />
+          : metadataQ.isLoading
+            ? <Skeleton className="w-full h-full object-cover rounded-md" />
+            : <div className="relative w-full h-full overflow-hidden bg-muted/50" />
         }
       </div>
       <div className="flex">
         <div className='pt-3 min-w-10'>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={`https://icons.duckduckgo.com/ip3/${encodeURIComponent(new URL(story.link ?? '').hostname)}.ico`}
             alt=""
