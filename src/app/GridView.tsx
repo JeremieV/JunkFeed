@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query"
 import { v4 } from "uuid"
 import Upvote from "@/components/upvote-button"
 import type { fetchRSS } from "@/lib/fetchFeed"
+import { add_click } from "@/lib/actions"
 
 export default function GridView({ currentStories }: { currentStories: { entry: FeedEntry, feed: Awaited<ReturnType<typeof fetchRSS>> }[] }) {
   return (
@@ -35,6 +36,7 @@ function GridComponent({ story, feed }: { story: FeedEntry, feed: Awaited<Return
       key={story.id}
       href={story.link}
       title={story.title}
+      onClick={() => { add_click(story, feed.feedUrl) }}
       target="_blank"
       rel="noopener noreferrer"
       className="block rounded-md"

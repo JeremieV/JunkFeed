@@ -4,8 +4,9 @@ Open source and modern feed builder. Because we can do better.
 
 ## Todo
 
-- support importing and pointing to opml files
-  - when doing so, display or use opml title and desc in the meta
+- telemetry
+- popular, new and random stories
+- improve display of OPML files 
 - color feeds red on error and orange on timeout
 - support sitemaps? (https://www.bloomberg.com/feeds/sitemap_news.xml)
 - store telemetry about subscriptions, clicks and upvotes

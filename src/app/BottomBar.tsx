@@ -5,10 +5,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function BottomBar({ currentPage, totalPages, paginate }: { currentPage: number, totalPages: number, paginate: (n: number) => void }) {
   return (
-    <div className="flex justify-between items-center mb-8">
+    <div className="flex justify-between items-center mt-4 mb-8">
       <Button
         onClick={() => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          // window.scrollTo({ top: 0, behavior: 'smooth' });
           paginate(currentPage - 1)
         }}
         disabled={currentPage === 1}

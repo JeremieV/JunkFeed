@@ -1,3 +1,5 @@
+'use server'
+
 /**
  * Telemetry functions while I don't have user accounts
  */
@@ -6,8 +8,9 @@ import { db } from "@/db";
 import { clicksTelemetry, feeds, followsTelemetry, items, searchesTelemetry, upvotesTelemetry } from "@/db/schema";
 import { FeedData, FeedEntry } from "@extractus/feed-extractor";
 import { fetchFeed } from "./fetchClient";
+import { url } from "inspector";
 
-export function add_search(term: string) {
+export async function add_search(term: string) {
   db.insert(searchesTelemetry)
     .values({ searchTerm: term })
     .execute();
@@ -49,7 +52,10 @@ export async function get_item_uuid(item: FeedEntry, feedUrl: string) {
       // @ts-ignore I enrich the entries with thumbnails manually in fetchFeed
       image: item.thumbnail,
     })
-    .onConflictDoNothing()
+    .onConflictDoUpdate({
+      target: [items.url, items.feedUrl],
+      set: { feedUrl } // no-op update, to return the id
+    })
     .returning({ id: items.id })
     .execute();
 
