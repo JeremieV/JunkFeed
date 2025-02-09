@@ -52,7 +52,6 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const feeds = React.useContext(FeedsContext)
-  console.log(feeds)
   const feedQ = useFeeds(feeds)
 
   const folders = feedQ.data

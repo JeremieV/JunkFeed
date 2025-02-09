@@ -35,7 +35,7 @@ export default function ItemPage() {
 
   return (
     <div>
-      <div className="flex mb-10">
+      <div className="flex my-10">
         <img
           src={`https://icons.duckduckgo.com/ip3/${encodeURIComponent(new URL(url).hostname)}.ico`}
           alt=""

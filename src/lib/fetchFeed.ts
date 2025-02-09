@@ -1,7 +1,6 @@
 "use server"
 
-import { extract, FeedData } from '@extractus/feed-extractor'
-import { fetchAndParseOPML, type Folder } from './opml'
+import { extract } from '@extractus/feed-extractor'
 
 export async function fetchRSS(url: string) {
   const result = await extract(url, {
@@ -63,9 +62,7 @@ export async function fetchRSS(url: string) {
         console.error(e)
         // console.error(entry)
       }
-      return {
-        thumbnail: ''
-      }
+      return { thumbnail: '' }
     }
   }, {
     // TODO check that the caching is working
@@ -73,5 +70,5 @@ export async function fetchRSS(url: string) {
     next: { revalidate: 60 * 60 },
     signal: AbortSignal.timeout(5_000), // controls the timeout
   })
-  return result
+  return { ...result, feedUrl: url }
 }

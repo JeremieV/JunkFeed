@@ -4,8 +4,9 @@ import { fetchRSS } from './fetchFeed';
 
 export async function fetchFeed(url: string): Promise<{
   type: 'opml' | 'feed';
+  feedUrl: string;
   folders?: Folder[];
-  feedData: PromiseSettledResult<FeedData>[];
+  feedData: PromiseSettledResult<Awaited<ReturnType<typeof fetchRSS>>>[];
 }> {
   if (url.endsWith('.opml')) {
     // fetch & parse opml
@@ -13,6 +14,7 @@ export async function fetchFeed(url: string): Promise<{
     // get all the feeds along with their folders
     return {
       type: 'opml',
+      feedUrl: url,
       folders: result.folders,
       feedData: await Promise.allSettled(
         result.feeds.map((feed) => fetchRSS(feed.url))
@@ -21,6 +23,7 @@ export async function fetchFeed(url: string): Promise<{
   }
   return {
     type: 'feed',
+    feedUrl: url,
     feedData: await Promise.allSettled([url].map((feed) => fetchRSS(feed)))
   }
 }

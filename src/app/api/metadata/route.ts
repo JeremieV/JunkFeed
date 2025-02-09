@@ -160,7 +160,7 @@ export async function GET(req: Request): Promise<Response> {
     const cacheKey = `meta:${targetUrl}`;
     const cached: string | null = await redis.get(cacheKey);
     if (cached) {
-      return new Response(cached, {
+      return new Response(JSON.stringify(cached), {
         headers: {
           'Content-Type': 'application/json',
           'Cache-Control': 'public, max-age=604800, stale-while-revalidate=604800' // cache for 1 week
@@ -175,7 +175,7 @@ export async function GET(req: Request): Promise<Response> {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error }), {
+    return new Response(JSON.stringify({ error: String(error) }), {
       status: 500,
       headers: {
         'Content-Type': 'application/json',

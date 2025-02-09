@@ -31,8 +31,8 @@ export default function Stories({ feeds }: { feeds: string[] }) {
 
   const stories = feedResults
     .flatMap((r) => r.feedData)
-    .flatMap((f) => f.status === 'fulfilled' ? f.value.entries : [])
-    .toSorted((a, b) => new Date(b?.published ?? 0).getTime() - new Date(a?.published ?? 0).getTime())
+    .flatMap((f) => f.status === 'fulfilled' ? f.value.entries?.map(e => ({ entry: e, feed: f.value })) : [])
+    .toSorted((a, b) => new Date(b?.entry?.published ?? 0).getTime() - new Date(a?.entry?.published ?? 0).getTime())
     .filter((entry) => entry !== undefined)
 
   const indexOfLastStory = currentPage * storiesPerPage
