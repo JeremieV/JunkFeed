@@ -20,9 +20,7 @@ import {
 import { cn } from "@/lib/utils";
 import { List, SearchIcon } from "lucide-react";
 import Link from "next/link";
-import { createContext, useState } from "react";
-
-export const FeedsContext = createContext<string[]>([])
+import { useState } from "react";
 
 export default function Page() {
   // const feeds = searchParams.feeds?.split(',').filter(x => x).map(decodeURIComponent) || []

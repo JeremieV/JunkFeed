@@ -70,7 +70,7 @@ function GridComponent({ story, feed }: { story: FeedEntry, feed: Awaited<Return
               <a href={`/feed/${encodeURIComponent(feed.feedUrl)}`} className="hover:text-primary transition-colors">{feed.title}</a>
             </div>
             <div>
-              <Upvote /><span className="mx-1">{`•`}</span>
+              <Upvote item={story} feedUrl={feed.feedUrl} /><span className="mx-1">{`•`}</span>
               <span>{displayTimeAgo(story.published ?? 0)}</span>
             </div>
           </div>

@@ -1,8 +1,8 @@
 # Stateless feed
 
-Open source and modern feed builder. Because we can do better.
+Open source and modern feed builder.
 
-## Todo
+## Todo
 
 - telemetry
 - popular, new and random stories

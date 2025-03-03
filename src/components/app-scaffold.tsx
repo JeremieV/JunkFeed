@@ -1,6 +1,9 @@
 'use client'
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
+
 import { _export, _import } from "@/lib/helpers";
 
 import { AppSidebar } from "@/components/app-sidebar"
@@ -37,6 +40,10 @@ const queryClient = new QueryClient({
   }
 })
 
+const persister = createSyncStoragePersister({
+  // storage: window.localStorage,
+})
+
 function SearchButton() {
   const pathname = usePathname();
   const router = useRouter();
@@ -64,7 +71,10 @@ function SearchButton() {
 
 export default function AppScaffold({ children }: { children: React.ReactNode }) {
   return (
-    <QueryClientProvider client={queryClient}>
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{ persister }}
+    >
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset>
@@ -91,13 +101,13 @@ export default function AppScaffold({ children }: { children: React.ReactNode })
               <div className="grow" />
               {/* <Separator orientation="vertical" className="mr-2 h-4" /> */}
               <div className="flex gap-2 items-center">
-                  <SearchButton />
+                <SearchButton />
               </div>
             </header>
             {children}
           </div>
         </SidebarInset>
       </SidebarProvider>
-    </QueryClientProvider >
+    </PersistQueryClientProvider >
   )
 }

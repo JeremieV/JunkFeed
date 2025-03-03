@@ -6,9 +6,8 @@
 
 import { db } from "@/db";
 import { clicksTelemetry, feeds, followsTelemetry, items, searchesTelemetry, upvotesTelemetry } from "@/db/schema";
-import { FeedData, FeedEntry } from "@extractus/feed-extractor";
+import { FeedEntry } from "@extractus/feed-extractor";
 import { fetchFeed } from "./fetchClient";
-import { url } from "inspector";
 
 export async function add_search(term: string) {
   db.insert(searchesTelemetry)

@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query"
 import LoadingIndicator from "@/components/LoadingIndicator"
 import { feedSearch } from "@/lib/server"
 import { FeedsList } from "@/components/feed-display"
+import { add_search } from "@/lib/actions"
 
 function isValidUrl(url: string) {
   try { new URL(url); return true } catch { return false }
@@ -54,6 +55,11 @@ export default function Page() {
     // Focus on text input 
     inputRef.current?.focus();
   }, []);
+
+  useEffect(() => {
+    if (debouncedInputValue)
+      add_search(debouncedInputValue)
+  }, [debouncedInputValue])
 
   return (
     <div className="mb-6">
