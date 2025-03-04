@@ -1,10 +1,11 @@
-# Stateless feed
+# junkfeed
 
-Open source and modern feed builder.
+The community-owned feed.
 
 ## Todo
 
-- telemetry
+- :: telemetry
+- implement upvotes
 - popular, new and random stories
 - improve display of OPML files 
 - color feeds red on error and orange on timeout

@@ -18,7 +18,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Stateless Feed",
+  title: "JunkFeed",
   description: "Build and share your own feed.",
 };
 

@@ -126,10 +126,10 @@ export function _export(urls: string[]) {
   const opml = `<?xml version="1.0" encoding="UTF-8"?>
 <opml version="2.0">
   <head>
-    <title>Stateless Feed OPML Export</title>
+    <title>JunkFeed OPML Export</title>
   </head>
   <body>
-    <outline text="stateless" title="stateless">
+    <outline text="JunkFeed" title="JunkFeed">
       ${urls.map((url) => `<outline type="rss" text="${url}" xmlUrl="${url}"/>`).join("\n      ")}
     </outline>
   </body>
@@ -139,7 +139,7 @@ export function _export(urls: string[]) {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = 'stateless_feeds_export.opml';
+  link.download = 'junkfeed_feeds_export.opml';
   link.click();
   URL.revokeObjectURL(url);
 }
