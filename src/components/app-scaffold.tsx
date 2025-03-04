@@ -2,7 +2,7 @@
 
 import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
+import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 
 import { _export, _import } from "@/lib/helpers";
 
@@ -14,15 +14,15 @@ import {
 import { gridviewAtom, subscriptionsAtom } from "@/state";
 import { Button, buttonVariants } from "@/components/ui/button";
 // import { _export, _import } from "@/lib/helpers";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
+// import {
+//   Breadcrumb,
+//   BreadcrumbItem,
+//   BreadcrumbLink,
+//   BreadcrumbList,
+//   BreadcrumbPage,
+//   BreadcrumbSeparator,
+// } from "@/components/ui/breadcrumb"
+// import { Separator } from "@/components/ui/separator"
 import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
@@ -30,6 +30,7 @@ import { cn } from "@/lib/utils";
 import { List, SearchIcon, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import localforage from 'localforage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,9 +41,9 @@ const queryClient = new QueryClient({
   }
 })
 
-const persister = createSyncStoragePersister({
-  // storage: window.localStorage,
-})
+const persister = createAsyncStoragePersister({
+  storage: localforage,
+});
 
 function SearchButton() {
   const pathname = usePathname();

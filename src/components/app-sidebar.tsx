@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/sidebar"
 import { DiscordLogoIcon, GitHubLogoIcon, PersonIcon } from "@radix-ui/react-icons"
 import { useFeeds } from "@/lib/queries"
-import { FeedsContext } from "@/app/page"
 import { NavFeeds } from "./nav-feeds"
 import { NavSubscriptions } from "./nav-subscriptions"
 import { NavFeatures } from "./nav-features"
@@ -51,7 +50,7 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const feeds = React.useContext(FeedsContext)
+  const feeds: string[] = []
   const feedQ = useFeeds(feeds)
 
   const folders = feedQ.data
