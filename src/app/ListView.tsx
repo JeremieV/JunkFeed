@@ -26,7 +26,7 @@ export default function ListView({ currentStories }: { currentStories: { entry: 
                 <span className="mx-1">{`•`}</span>
               </>
             }
-            <Upvote />
+            <Upvote item={story} feedUrl={feed.feedUrl} />
             <span className="mx-1">{`•`}</span><span>{displayTimeAgo(story.published ?? '')}</span>
           </div>
         </div>
