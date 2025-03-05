@@ -1,4 +1,4 @@
-# junkfeed
+# JunkFeed
 
 The community-owned feed.
 

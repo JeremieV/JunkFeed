@@ -8,15 +8,16 @@ import { db } from "@/db";
 import { clicksTelemetry, feeds, followsTelemetry, items, searchesTelemetry, upvotesTelemetry } from "@/db/schema";
 import { FeedEntry } from "@extractus/feed-extractor";
 import { fetchFeed } from "./fetchClient";
+import { count, eq } from "drizzle-orm";
 
 export async function add_search(term: string) {
-  db.insert(searchesTelemetry)
+  await db.insert(searchesTelemetry)
     .values({ searchTerm: term })
     .execute();
 }
 
 export async function add_follow(feedUrl: string) {
-  db.insert(followsTelemetry)
+  await db.insert(followsTelemetry)
     .values({ feedUrl })
     .execute();
 
@@ -26,14 +27,14 @@ export async function add_follow(feedUrl: string) {
   if (result.feedData[0].status !== 'fulfilled') return;
   const feed = result.feedData[0].value
 
-  db.insert(feeds)
+  await db.insert(feeds)
     .values({
       url: feedUrl,
       title: feed.title,
       description: feed.description,
       language: feed.language,
       link: feed.link,
-      published: feed.published
+      published: feed.published || null
     })
     .execute();
 }
@@ -66,7 +67,7 @@ export async function add_click(item: FeedEntry, feedUrl: string) {
   const itemId = await get_item_uuid(item, feedUrl)
   if (!itemId) return;
 
-  db.insert(clicksTelemetry)
+  await db.insert(clicksTelemetry)
     .values({ itemId })
     .execute();
 }
@@ -76,7 +77,17 @@ export async function add_upvote(item: FeedEntry, feedUrl: string) {
   const itemId = await get_item_uuid(item, feedUrl)
   if (!itemId) return;
 
-  db.insert(upvotesTelemetry)
+  await db.insert(upvotesTelemetry)
     .values({ itemId })
     .execute();
+}
+
+export async function get_upvotes(item_id: string) {
+  const r = await db.select({
+    count: count()
+  })
+  .from(upvotesTelemetry)
+  .where(eq(upvotesTelemetry.itemId, item_id))
+
+  return r[0]?.count || 0
 }
