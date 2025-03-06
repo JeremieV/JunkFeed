@@ -2,7 +2,8 @@ import { Redis } from '@upstash/redis';
 import { parse, HTMLElement } from 'node-html-parser';
 import UserAgent from 'user-agents';
 
-export const runtime = 'edge';
+// export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,

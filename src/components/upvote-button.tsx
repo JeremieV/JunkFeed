@@ -5,7 +5,6 @@ import { upvotesAtom } from "@/state"
 import { FeedEntry } from "@extractus/feed-extractor"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { useAtom } from "jotai/react"
-import { useState } from "react"
 
 export default function Upvote({ item, feedUrl }: {
   item: FeedEntry,

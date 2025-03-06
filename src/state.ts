@@ -9,5 +9,5 @@ export const subscriptionsAtom = atomWithStorage<{
 
 export const hideHomeFeedAtom = atomWithStorage('hide-home-feed', false)
 
-/** stored as an array of `url:feedUrl`. the first ids are upvoted most recently */
+/** stored as an array of uuids. the first ids are upvoted most recently */
 export const upvotesAtom = atomWithStorage<string[]>('upvotes', [])
