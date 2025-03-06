@@ -8,7 +8,7 @@ import { db } from "@/db";
 import { clicksTelemetry, feeds, followsTelemetry, items, searchesTelemetry, upvotesTelemetry } from "@/db/schema";
 import { FeedEntry } from "@extractus/feed-extractor";
 import { fetchFeed } from "./fetchClient";
-import { count, eq } from "drizzle-orm";
+import { count, eq, sql } from "drizzle-orm";
 
 export async function add_search(term: string) {
   await db.insert(searchesTelemetry)
@@ -39,7 +39,7 @@ export async function add_follow(feedUrl: string) {
     .execute();
 }
 
-export async function get_item_uuid(item: FeedEntry, feedUrl: string) {
+export async function get_item(item: FeedEntry, feedUrl: string) {
   if (!item.link) return;
 
   // if the item does not exist in the database, add it, else return the uuid
@@ -56,29 +56,33 @@ export async function get_item_uuid(item: FeedEntry, feedUrl: string) {
       target: [items.url, items.feedUrl],
       set: { feedUrl } // no-op update, to return the id
     })
-    .returning({ id: items.id })
+    .returning()
     .execute();
 
-  return r[0].id
+  return r[0]
 }
 
 export async function add_click(item: FeedEntry, feedUrl: string) {
   // if the item does not exist in the database, add it
-  const itemId = await get_item_uuid(item, feedUrl)
-  if (!itemId) return;
+  const i = await get_item(item, feedUrl)
+  if (!i) return;
 
   await db.insert(clicksTelemetry)
-    .values({ itemId })
+    .values({ itemId: i.id })
     .execute();
 }
 
 export async function add_upvote(item: FeedEntry, feedUrl: string) {
   // if the item does not exist in the database, add it
-  const itemId = await get_item_uuid(item, feedUrl)
-  if (!itemId) return;
+  const i = await get_item(item, feedUrl)
+  if (!i) return;
 
+  await db.update(items)
+    .set({ upvoteCount: sql`${items.upvoteCount} + 1` })
+    .where(eq(items.id, i.id))
+    .execute();
   await db.insert(upvotesTelemetry)
-    .values({ itemId })
+    .values({ itemId: i.id })
     .execute();
 }
 

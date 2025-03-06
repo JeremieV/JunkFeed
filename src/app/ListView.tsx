@@ -23,9 +23,9 @@ export default function ListView({ currentStories }: { currentStories: { entry: 
             {!isFeedRoute &&
               <>
                 <a href={`/feed/${encodeURIComponent(feed.feedUrl)}`} className="hover:text-primary transition-colors">{feed.title}</a>
-                <span className="mx-1">{`•`}</span>
               </>
             }
+            <span className="mx-1">{`•`}</span>
             <Upvote item={story} feedUrl={feed.feedUrl} />
             <span className="mx-1">{`•`}</span><span>{displayTimeAgo(story.published ?? '')}</span>
           </div>
