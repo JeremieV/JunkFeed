@@ -43,7 +43,7 @@ const data = {
     },
     {
       title: "Join the community",
-      url: "#",
+      url: "https://discord.gg/fxCSs7NqKy",
       icon: DiscordLogoIcon, // or slack
     },
   ],

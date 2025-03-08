@@ -1,6 +1,6 @@
 'use client'
 
-import { add_upvote, get_item, get_upvotes } from "@/lib/actions"
+import { add_upvote, get_item } from "@/lib/actions"
 import { upvotesAtom } from "@/state"
 import { FeedEntry } from "@extractus/feed-extractor"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
@@ -17,14 +17,8 @@ export default function Upvote({ item, feedUrl }: {
     queryKey: ['upvotes', item.link, feedUrl],
     queryFn: async () => {
       const dbi = await get_item(item, feedUrl)
-      if (!dbi) return {
-        // hasUpvoted: false,
-        dbi
-      }
-      return {
-        // hasUpvoted: upvotes.includes(dbi.id),
-        dbi
-      }
+      if (!dbi) return { dbi }
+      return { dbi }
     },
     staleTime: 10
   })
